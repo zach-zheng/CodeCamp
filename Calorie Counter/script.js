@@ -37,6 +37,8 @@ function calculateCalories(e) {
   /*The default action of the submit event is to reload the page. You need to prevent this default action using the preventDefault() method of your e parameter. */
   e.preventDefault();
   isError = false;
+
+  const budgetCalories = getCaloriesFromInputs([budgetNumberInput]);
   const breakfastNumberInputs = document.querySelectorAll("#breakfast input[type='number']");
   const lunchNumberInputs = document.querySelectorAll("#lunch input[type='number']");
   const dinnerNumberInputs = document.querySelectorAll("#dinner input[type='number']");
@@ -48,6 +50,16 @@ function calculateCalories(e) {
   const dinnerCalories = getCaloriesFromInputs(dinnerNumberInputs);
   const snacksCalories = getCaloriesFromInputs(snacksNumberInputs);
   const exerciseCalories = getCaloriesFromInputs(exerciseNumberInputs);
+
+  if (isError) {
+    return;
+  }
+  const consumedCalories = breakfastCalories + lunchCalories + dinnerCalories + snacksCalories;
+  const remainingCalories = budgetCalories - consumedCalories + exerciseCalories;
+  const surplusOrDeficit = remainingCalories < 0 ? 'Surplus' : 'Deficit';
+
+  output.innerHTML = `<span class="${surplusOrDeficit.toLowerCase()}">${Math.abs(remainingCalories)} Calorie ${surplusOrDeficit}</span><hr></hr><p>${budgetCalories} Calories Budgeted</p><p>${consumedCalories} Calories Consumed</p><p>${exerciseCalories} Calories Burned</p>`;
+  output.classList.remove('hide');
 }
 
 function getCaloriesFromInputs(list) {
@@ -64,5 +76,16 @@ function getCaloriesFromInputs(list) {
   }
   return calories;
 }
-
+function clearForm() {
+  const inputContainers = Array.from(document.querySelectorAll(`.input-container`));
+  for(const container of inputContainers) {
+    container.innerHTML = '';
+    
+  }
+  budgetNumberInput.value = '';
+  output.innerText = '';
+  output.classList.add('hide') ;
+}
 addEntryButton.addEventListener('click', addEntry);
+calorieCounter.addEventListener("submit", calculateCalories);
+clearButton.addEventListener("click", clearForm);
