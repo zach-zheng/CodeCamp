@@ -44,15 +44,35 @@ const playerScoreSpanElement = document.getElementById("player-score");
 const computerScoreSpanElement = document.getElementById("computer-score")
 const roundResultsMsg = document.getElementById("results-msg");
 const winnerMsgElement = document.getElementById("winner-msg");
-const optionContainer = document.querySelector("option-container");
+const optionsContainer = document.querySelector("option-container");
 const resetGameBtn = document.getElementById("reset-game-btn");
 
 function showResults(userOption) {
   roundResultsMsg.innerText = getRoundResults(userOption);
   playerScoreSpanElement.innerText = playerScore ;
   computerScoreSpanElement.innerText = computerScore;
-
+  if (playerScore >= 3) {
+    winnerMsgElement.innerText = "Player has won the game!"
+    resetGameBtn.style.display = "block";
+    optionsContainer.style.display = "none";
+  } else if (computerScore >= 3) {
+    winnerMsgElement.innerText = "Computer has won the game!"
+    resetGameBtn.style.display = "block";
+    optionsContainer.style.display = "none";
+  }
 }
+
+function resetGame() {
+  playerScore = 0;
+  computerScore = 0;
+  playerScoreSpanElement.innerText = playerScore ;
+  computerScoreSpanElement.innerText = computerScore;
+  resetGameBtn.style.display = "none";
+  optionsContainer.style.display = "block";
+  winnerMsgElement.innerText = '';
+  roundResultsMsg.innerText = '';
+}
+resetGameBtn.addEventListener("click", resetGame);
 
 const rockBtn = document.getElementById("rock-button");
 const paperBtn = document.getElementById("paper-button");
