@@ -1,6 +1,4 @@
-(defun ask-number ()
- (format t "Please enter a number. ")
- (let ((val (read)))
-   (if (numberp val)
-       val
-       (ask-number))))
+(defun show-squares (start end)
+  (do ((i start (+ i 1)))
+      ((> i end) 'done)
+    (format t "~A ~A~%" i (* i i))))
