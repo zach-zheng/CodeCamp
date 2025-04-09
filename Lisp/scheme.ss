@@ -50,14 +50,81 @@
     ((= y 1) 2)
     (else (A (- x 1)(A x (- y 1))))))
 
-    ;(1 10)
-    ;(A 0 (A 1 9)) = (1 10)
-    ;(A 0 (A 1 8)) = (A 0 (A 1 9))
-    ;(A 0 (A 1 7)) = (A 0 (A 1 8))
-    ;(A 0 (A 1 2)) = (A 0 (A 1 1)) = 4
-    ;(A 0 (A 1 1)) = 2
-    ;(2 4) 
-    ;(A 1 (A 2 3)) = 
-    ;(A 1 (A 2 2)) = 16 
-    ;(A 1 (A 2 1)) = (A 1 2) = 4
-    ;(A 2 1) = 2
+; rember: symbol lat -> lat
+(define rember
+  (lambda (a lat)
+    (cond
+      ((null? lat) '())
+      ((eq? a (car lat)) (cdr lat))
+      (else (cons (car lat) (rember a (cdr lat)))))))
+
+; multirember: symbol lat -> lat
+(define multirember
+  (lambda (a lat)
+    (cond
+      ((null? lat) '())
+      (else 
+        (cond
+          ((eq? (car lat) a) (multirember a (cdr lat)))
+          (else (cons (car lat) (multirember a (cdr lat)))))))))
+
+; subst(substitution): symbol symbol lat -> lat
+(define subst
+  (lambda (new old lat)
+    (cond
+      ((null? lat) '())
+      ((eq? old (car lat)) (cons new (cdr lat)))
+      (else (cons (car lat) (subst new old (cdr lat)))))))
+
+    
+; subst2
+(define subst2
+  (lambda (new o1 o2 lat)
+    (cond
+      ((null? lat) '())
+      (else (cond
+        ((or (eq? (car lat) o1) (eq? (car lat) o2)) (cons new (cdr lat)))
+        (else (cons (car lat) (subst2 new o1 o2 (cdr lat)))))))))
+
+; multisubst
+(define multisubst
+  (lambda (new old lat)
+    (cond
+      ((null? lat) '())
+      ((eq? old (car lat)) (cons new (multisubst new old (cdr lat))))
+      (else (cons (car lat) (multisubst new old (cdr lat)))))))
+
+; insertR: symbol symbol lat -> lat
+(define insertR
+  (lambda (new old lat)
+    (cond
+      ((null? lat) '())
+      ((eq? old (car lat)) (cons old (cons new (cdr lat))))
+      (else (cons (car lat) (insertR new old (cdr lat)))))))
+
+
+; multiinsertR: symbol symbol lat -> lat
+(define multiinsertR
+  (lambda (new old lat)
+    (cond
+      ((null? lat) '())
+      ((eq? (car lat) old) (cons old (cons new (multiinsertR new old (cdr lat)))))
+      (else (cons (car lat) (multiinsertR new old (cdr lat)))))))
+
+; insertL: symbol symbol lat -> lat
+(define insertL
+  (lambda (new old lat)
+    (cond
+      ((null? lat) '())
+      ((eq? old (car lat)) (cons new lat))
+      (else (cons (car lat) (insertL new old (cdr lat)))))))
+
+; multiinsertL 
+(define multiinsertL 
+  (lambda (new old lat)
+    (cond
+      ((null? lat) '())
+      (else
+        (cond
+        ((eq? (car lat) old) (cons new (cons old (multiinsertL new old (cdr lat)))))
+        (else (cons (car lat) (multiinsertL new old (cdr lat)))))))))
