@@ -79,3 +79,16 @@
     (cond
       ((zero? m) 1)
       (else (* n (expo n (sub1 m)))))))
+
+; division /
+(define div
+  (lambda (a b)
+    (cond
+      ((< a b) 0)
+      (else (add1 (div (- a b) b)))))
+
+(define length
+  (lambda (lat)
+    (cond
+      ((null? lat) 0)
+      (else (add1 (length (cdr lat))))))
