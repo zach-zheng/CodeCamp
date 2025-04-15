@@ -127,6 +127,6 @@
 
 (define (occur a lat)
   (cond
-    ((null? lat) '())
-    (predicate2 consequent2)
-    (else ())))
+    ((null? lat) 0)
+    ((eq? (car lat) a) (add1 (occur a (cdr lat))))
+    (else (occur a (cdr lat)))))
