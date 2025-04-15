@@ -85,10 +85,29 @@
   (lambda (a b)
     (cond
       ((< a b) 0)
-      (else (add1 (div (- a b) b)))))
+      (else (add1 (div (- a b) b))))))
 
 (define length
   (lambda (lat)
     (cond
       ((null? lat) 0)
-      (else (add1 (length (cdr lat))))))
+      (else (add1 (length (cdr lat)))))))
+  
+; pick: number lat -> symbol
+(define pick
+  (lambda (n lat)
+    (cond
+     ((zero? (sub1 n)) (car lat))
+     (else (pick (sub1 n) (cdr lat))))))
+
+; rmpick
+(define (rmpick n lat)
+  (cond
+    ((zero? (sub1 n)) (cdr lat))
+    (else (cons (car lat) (rmpick (sub1 n) (cdr lat))))))
+
+(define (no-nums lat)
+  (cond
+    ((null? lat) '())
+    ((number? (car lat)) (no-nums (cdr lat)))
+    (else (cons (car lat) (no-nums (cdr lat))))))
