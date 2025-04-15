@@ -111,3 +111,6 @@
     ((null? lat) '())
     ((number? (car lat)) (no-nums (cdr lat)))
     (else (cons (car lat) (no-nums (cdr lat))))))
+
+    (define (name arguments)
+      body)
