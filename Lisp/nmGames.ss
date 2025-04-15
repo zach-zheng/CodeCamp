@@ -112,5 +112,21 @@
     ((number? (car lat)) (no-nums (cdr lat)))
     (else (cons (car lat) (no-nums (cdr lat))))))
 
-    (define (name arguments)
-      body)
+ (define (all-nums lat)
+  (cond
+    ((null? lat) '())
+    ((number? (car lat)) (cons (car lat) (all-nums (cdr lat))))
+    (else (all-nums (cdr lat)))))
+
+; eqan : which is true if its two arguments (al and a2) are the same atom. 
+(define (eqan a1 a2)
+  (cond
+    ((and (number? a1) (number? a2)) (= a1 a2))
+    ((or (number? a1) (number? a2)) #f)
+    (else (eq? a1 a2))))
+
+(define (occur a lat)
+  (cond
+    ((null? lat) '())
+    (predicate2 consequent2)
+    (else ())))
