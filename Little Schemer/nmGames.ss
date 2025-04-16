@@ -100,11 +100,7 @@
      ((zero? (sub1 n)) (car lat))
      (else (pick (sub1 n) (cdr lat))))))
 
-; rmpick
-(define (rmpick n lat)
-  (cond
-    ((zero? (sub1 n)) (cdr lat))
-    (else (cons (car lat) (rmpick (sub1 n) (cdr lat))))))
+
 
 (define (no-nums lat)
   (cond
@@ -130,3 +126,18 @@
     ((null? lat) 0)
     ((eq? (car lat) a) (add1 (occur a (cdr lat))))
     (else (occur a (cdr lat)))))
+
+; one?
+(define (one? n)
+  (= n 1))
+
+; removepick
+(define (rmpick n lat)
+  (cond
+    ((zero? (sub1 n)) (cdr lat))
+    (else (cons (car lat) (rmpick (sub1 n) (cdr lat))))))
+
+(define (rmpick n lat)
+  (cond
+    ((one? n) (cdr lat))
+    (else (cons (car lat) (rmpick (sub1 n) (cdr lat))))))
