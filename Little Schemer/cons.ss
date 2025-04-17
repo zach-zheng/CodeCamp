@@ -102,7 +102,6 @@
       ((eq? old (car lat)) (cons old (cons new (cdr lat))))
       (else (cons (car lat) (insertR new old (cdr lat)))))))
 
-
 ; multiinsertR: symbol symbol lat -> lat
 (define multiinsertR
   (lambda (new old lat)
