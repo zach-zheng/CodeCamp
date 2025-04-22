@@ -17,7 +17,6 @@
         (else (cons (car l) (rember* a (cdr l))))))
     (else (cons (rember* a (car l)) (rember* a (cdr l))))))
 
-
 (define insertR*
   (lambda (new old l)
     (cond

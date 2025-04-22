@@ -50,13 +50,14 @@
     ((= y 1) 2)
     (else (A (- x 1)(A x (- y 1))))))
 
-; rember: symbol lat -> lat
+; rember: remove member symbol lat -> lat
 (define rember
   (lambda (a lat)
     (cond
       ((null? lat) '())
       ((eq? a (car lat)) (cdr lat))
       (else (cons (car lat) (rember a (cdr lat)))))))
+
 
 ; multirember: symbol lat -> lat
 (define multirember
