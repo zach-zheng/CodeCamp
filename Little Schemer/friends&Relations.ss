@@ -37,36 +37,82 @@
     (else (cons (car lat) (makeset (multirember (car lat) (cdr lat)))))))
 
 ;subset:
-(define (subset? set1 set2)
+(define (subset set1 set2)
   (cond
     ((null? set1) #t)
-    ((member? (car set1) set2) (subset? (cdr set1) set2))
+    ((member? (car set1) set2) (subset (cdr set1) set2))
     (else #f)))
 
 ;eqset:
 (define (eqset? set1 set2)
-    (and (subset? set1 set2) (subset? set2 set1)))
+    (and (subset set1 set2) (subset set2 set1)))
 
 ;insertset:
-(define (insertsect? set1 set2)
+(define (insertsect set1 set2)
   (cond
     ((null? set1) #f)
     ((member? (car set1) set2) #t)
-    (else (subset? (cdr set1) set2))))
+    (else (subset (cdr set1) set2))))
 
-(define (insertsect? set1 set2)
+(define (insertsect set1 set2)
   (cond
     ((null? set1) #f)
-    (else (or (member? (car set1) set2) (subset? (cdr set1) set2)))))
+    (else (or (member? (car set1) set2) (subset (cdr set1) set2)))))
 
-(define (insertsect? set1 set2)
+(define (insertsect set1 set2)
   (cond
     ((null? set1) '())
     ((member? (car set1) set2) (cons (car set1) (insertsect (cdr set1) set2)))
-    (else (insertsect? (cdr set1) set2))))
+    (else (insertsect (cdr set1) set2))))
 
 ;union
 (define (union set1 set2)
   (cond
     ((null? set1) '())
-    ()))
+    ((member? (car set1) set2) (union (cdr set1) set2)) 
+    (else (cons (car set1) (union (cdr set1) set2)))))
+
+;insertsectAll
+(define (insertsectAll l-set)
+  (cond
+    ((null? (cdr l-set)) (car l-set))
+    (else (insertsect (car l-set) (insertsectAll (cdr l-set))))))
+
+;a-pair: a list with only two S-expression
+(define (a-pair p)
+   (cond
+    ((atom? p) #f)
+    ((null? p) #f)
+    ((null? (cdr p)) #f)
+    ((null? (cdr (cdr p))) #t)
+    (else #f)))
+
+(define (first x)
+  (cond
+    (else (car x))))
+
+(define (second a)
+  (cond
+    (else (car (cdr a)))))
+
+(define (build s1 s2)
+  (cond
+    (else (cons s1 (cons s2 '())))))
+
+(define (third l)
+  (car (cdr (cdr l))))
+
+
+(define (set? lat)
+  (cond
+    ((null? lat) #t)
+    ((member? (car lat) (cdr lat)) #f)
+    (else (set? (cdr lat)))))
+
+(define (fun? l-set)
+    (set? (first l-set)))
+
+(define (revrel rel)
+  (cond
+    ((null? rel) '())
+    ((cons (cdr (first rel)) (car (first rel))) consequent2)))
