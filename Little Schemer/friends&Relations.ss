@@ -115,4 +115,13 @@
 (define (revrel rel)
   (cond
     ((null? rel) '())
-    ((cons (cdr (first rel)) (car (first rel))) consequent2)))
+    (else (cons (build (second (car rel)) (first (car rel))) (revrel (cdr rel))))))
+
+
+(define (revrel rel)
+  (cond
+    ((null? rel) '())
+    (else (cons (build (second (car rel)) (first (car rel))) (revrel (cdr rel))))))
+
+ (define (fullfun? fun)
+  (set? (second fun)))
