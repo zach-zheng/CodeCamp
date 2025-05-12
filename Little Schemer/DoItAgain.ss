@@ -44,3 +44,21 @@
   (build (first (first pair))
     (build (second (first pair))
       (second pair))))
+
+(define (shuffle pora)
+  (cond
+    ((atom? pora) pora)
+    ((a-pair? (car pora)) (shuffle (revpair pora)))
+    (else (build (car pora) (shuffle (cdr pora))))))
+
+
+; (A 1 0) 2; (A 2 1)
+; (A 1 1) 3   (A 0 (A (1 0))) - (A 0 (A 0 1)) - (A 0 2) 3
+; (A 2 2) 7
+
+(define (A n m)
+  (cond
+    ((zero? n) (add1 m))
+    ((zero? m) (A (sub1 n) 1))
+    (else (A (sub1 n)
+          (A n (sub1 m))))))
