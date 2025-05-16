@@ -62,3 +62,56 @@
     ((zero? m) (A (sub1 n) 1))
     (else (A (sub1 n)
           (A n (sub1 m))))))
+
+(define (length l)
+  (cond
+    ((null? l) 0)
+    (else (add1 (length (cdr l))))))
+
+(lambda (l) (cond
+  ((null? l) 0)
+  (else (add1 (eternity (cdr l))))))
+
+(lambda (l) (cond
+  ((null? l) 0)
+  (else (add1 (length (cdr l))))))
+
+(lambda (l) (cond
+  ((null? l) 0)
+  (else (add1 
+    ((lambda (l) 
+      (cond
+        ((null? l) 0)
+        (else (add1 (eternity (cdr l)))))) 
+    (cdr l))))))
+
+
+;; length0
+((lambda (mk-length)
+   (mk-length mk-length))
+ (lambda (mk-length)
+   (lambda (l)
+     (cond
+      ((null? l) 0)
+      (else (add1 (mk-length (cdr l))))))))
+
+((lambda (mk-length) (mk-length mk-length))
+  (lambda (mk-length) 
+  ((lambda (length)
+    (lambda (l) 
+    (cond
+      ((null? l) 0) 
+      (else (add1 (length (cdr l)))))))
+    (lambda (x)
+    ((mk-length mk-length) x)))))
+
+((lambda (le)
+  ((lambda (mk-length)
+    (mk-length mk-length)) (lambda (mk-length)
+  (le (lambda (x)
+      ((mk-length mk-length) x))))))
+(lambda (length) 
+  (lambda (l)
+   (cond
+    ((null? l) 0)
+    (else (add1 (length (cdr l))))))))
