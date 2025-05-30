@@ -115,3 +115,21 @@
    (cond
     ((null? l) 0)
     (else (add1 (length (cdr l))))))))
+
+(define (list-to-action e)
+  (cond
+    ((atom? (car e)) (cond
+      ((eq? (car e) 'quote) *quote)
+      ((eq? (car e) 'lambda) *lambda)
+      ((eq? (car e) 'cond) *cond)
+      (else *application)))
+    (else *application)))
+
+(define (value e)
+  (meaning e '()))
+
+(define (meaning e table)
+  ((expression-to-action e) e table))
+
+(define (*lambda e table)
+  (build 'non-primitive (cons table (cdr e))))
