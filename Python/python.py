@@ -1,18 +1,25 @@
-filename = 'pi_digits.txt'
+# import os
+# os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-with open(filename) as file_object:
-    for line in file_object:
-        print(line)
 
-# try:
-#     with open(filename) as file_object:
-#         contents = file_object.read()
-# except FileNotFoundError:
-#     msg = "Sorry, the file " + filename + " does not exist."
-#     print(msg)
-# else:
-#     #counting number of words in file
-#     words = contents.split()
-#     num_words = len(words)
-#     print("This file " + filename + " has about " + str(num_words) + " words.")
+def count_words(filename):
+    """Counting a file which the numbers of words"""
+    try:
+        with open(filename) as f_object:
+            contents = f_object.read()
+    except FileNotFoundError:
+        # msg = "Sorry, the file " + filename + " don't exist."
+        # print(msg)
+        pass
+    
+    else:
+        words_list = contents.split()
+        num_words = len(words_list)
+        print("The file " + filename + " has about " + str(num_words) + " words.")
+    
+filenames = ['Alice.txt', 'Monster Master', 'Wonderland.txt']
+for filename in filenames:
+    count_words(filename)
+
+
  
