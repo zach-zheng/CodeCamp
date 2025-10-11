@@ -5,23 +5,26 @@ from .forms import TopicForm, EntryForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+
+
+
 # Create your views here.
 def index(request):
     #学习笔记的主页
-    return render(request, 'index.html')
+    return render(request, 'learning_logs/index.html')
 
 def topics(request):
     #显示所有主题
     topics = Topic.objects.order_by('date_added')
     context = {'topics': topics}
-    return render(request, 'topics.html', context)
+    return render(request, 'learning_logs/topics.html', context)
 
 #显示特定主题及其所有的条目
 def topic(request, topic_id):
     topic = Topic.objects.get(id=topic_id)
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
-    return render(request, 'topic.html', context)
+    return render(request, 'learning_logs/topic.html', context)
 
 def new_topic(request):
     #添加新主题
@@ -36,7 +39,7 @@ def new_topic(request):
             return HttpResponseRedirect(reverse('topics'))
         
     context = {'form': form}
-    return render(request, 'new_topic.html', context)
+    return render(request, 'learning_logs/new_topic.html', context)
 
 def new_entry(request, topic_id):
     #特定主题中添加新条目
@@ -52,10 +55,10 @@ def new_entry(request, topic_id):
             new_entry = form.save(commit=False)
             new_entry.topic =topic
             new_entry.save()
-            return HttpResponseRedirect(reverse('topic', args=[topic_id]))
+            return HttpResponseRedirect(reverse('learning_logs/topic', args=[topic_id]))
         
     context = {'topic': topic, 'form': form}
-    return render(request, 'new_entry.html', context)
+    return render(request, 'learning_logs/new_entry.html', context)
 
 def edit_entry(request, entry_id):
     #编辑现有条目
@@ -70,7 +73,7 @@ def edit_entry(request, entry_id):
         form = EntryForm(instance=entry, data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('topic', args=[topic.id]))
+            return HttpResponseRedirect(reverse('learning_logs/topic', args=[topic.id]))
     
     context = {'entry': entry, 'topic': topic, 'form': form}
-    return render(request, 'edit_entry.html', context)
+    return render(request, 'learning_logs/edit_entry.html', context)

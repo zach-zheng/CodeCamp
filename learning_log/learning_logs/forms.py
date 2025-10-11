@@ -1,6 +1,8 @@
 from django import forms
 from .models import Topic, Entry
 
+from django.contrib.auth.forms import AuthenticationForm
+
 class TopicForm(forms.ModelForm):
     class Meta:
         model = Topic
