@@ -44,7 +44,7 @@
                 (eq? old1 (car lat))) (cons new (cdr lat)))
         (else (cons (car lat) (subst2 new old1 old2 (cdr lat))))))
 
-(define (nultirember a lat)
+(define (multirember a lat)
     (cond ((null? lat) '())
         ((eq? a (car lat)) (multirember a (cdr lat)))
         (else (cons (car lat) (multirember a (cdr lat))))))
