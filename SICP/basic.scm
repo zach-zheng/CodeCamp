@@ -20,3 +20,22 @@
 (define (sqrt x)
     (the y (and (>= y 0)
         (= (square y) x))))
+
+;牛顿法计算平方根迭代公式：guess_new = 1/2(guess_old + x/guess_old)
+(define (sqrt-iter guess x)
+    (if (good-enough? guess x)
+        guess
+        (sqrt-iter (improve guess x) x)))
+
+(define (improve guess x)
+    (average guess (/ x guess)))
+    
+(define (average x y)
+    (/ (+ x y) 2))
+
+(define (good-enough? guess x)
+    (< (abs (- (square guess) x)) 0.001))
+
+;平方根计算函数的初始猜测值 1.0
+(define (sqrt x)
+    (sqrt-iter 1.0 x))
